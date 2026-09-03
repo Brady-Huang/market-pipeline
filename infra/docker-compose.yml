@@ -1,0 +1,23 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: market_timescaledb
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: market_data
+      POSTGRES_PASSWORD: market_dev_pw
+      POSTGRES_DB: market_data
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: market_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+volumes:
+  timescale_data:
